@@ -36,6 +36,7 @@ public class Platformer extends JComponent implements KeyListener {
     boolean right = false;
     boolean left = false;
     boolean jump = false;
+    boolean powerDown = false;
     boolean inAir = false;
     boolean gameOver = false;
     int lives = 5;
@@ -132,24 +133,34 @@ public class Platformer extends JComponent implements KeyListener {
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
             dy = dy + gravity;
-            if (right && !gameOver) {
+            if (right && !gameOver) 
+            {
                 player.x += 10;
             } else if (left && !gameOver) {
                 player.x -= 10;
             }
-            if (jump && !inAir && !gameOver) {
+            if (jump && !inAir && !gameOver) 
+            {
                 dy = -30;
                 inAir = true;
+            }
+            
+            if(powerDown && player.height != 25 && player.width != 25) 
+            {
+                player.height -= 25;
+                player.width -= 25;
             }
 
             player.y += dy;
 
-            if (player.x < 0) {
+            if (player.x < 0) 
+            {
                 player.x = 0;
             }
 
             //collisions for level 1
-            if (level == 1) {
+            if (level == 1) 
+            {
                 if (player.intersects(block)) {
                     handleCollision(player, block);
                 } else if (player.intersects(block2)) {
@@ -172,7 +183,8 @@ public class Platformer extends JComponent implements KeyListener {
                     inAir = true;
                 }
                 
-                if (player.x == 4000) {
+                if (player.x == 4000) 
+                {
                     level = 2;
                     player.x = 100;
                     block2.x = 350;
@@ -189,7 +201,8 @@ public class Platformer extends JComponent implements KeyListener {
             }
             
             //collisions for level 2
-             if (level == 2) {
+             if (level == 2) 
+             {
                 if (player.intersects(block)) {
                     handleCollision(player, block);
                 } else if (player.intersects(block2)) {
@@ -200,10 +213,13 @@ public class Platformer extends JComponent implements KeyListener {
              }
              
             //taking damage/losing a life on level 1
-            if (level == 1) {
+            if (level == 1) 
+            {
                 if (player.x >= enemy.x && player.x <= enemy.x + 50
-                        && player.y == enemy.y) {
-                    if (player.x == enemy.x + 50) {
+                        && player.y == enemy.y) 
+                {
+                    if (player.x == enemy.x + 50) 
+                    {
                         player.x += 100;
                     } else {
                         player.x -= 100;
@@ -214,7 +230,8 @@ public class Platformer extends JComponent implements KeyListener {
                         player.width == 25 && player.height == 25 && enemy.y < player.y
                         && enemy.y != - 100) {
                         lives -= 1;
-                        if (lives <= 0) {
+                        if (lives <= 0) 
+                        {
                             gameOver = true;
                         } else {
                             player.x = 100;
@@ -228,8 +245,10 @@ public class Platformer extends JComponent implements KeyListener {
                         }
                 }
                 if (player.x >= enemy2.x && player.x <= enemy2.x + 50
-                        && player.y == enemy2.y) {
-                    if (player.x == enemy2.x + 50) {
+                        && player.y == enemy2.y) 
+                {
+                    if (player.x == enemy2.x + 50) 
+                    {
                         player.x += 100;
                     } else {
                         player.x -= 100;
@@ -240,7 +259,8 @@ public class Platformer extends JComponent implements KeyListener {
                         player.width == 25 && player.height == 25 && enemy2.y < player.y
                         && enemy2.y != - 100) {
                         lives -= 1;
-                        if (lives <= 0) {
+                        if (lives <= 0) 
+                        {
                             gameOver = true;
                         } else {
                             player.x = 100;
@@ -255,8 +275,10 @@ public class Platformer extends JComponent implements KeyListener {
                 }
                 
                 if (player.x >= enemy3.x && player.x <= enemy3.x + 50
-                        && player.y == enemy3.y) {
-                    if (player.x == enemy3.x + 50) {
+                        && player.y == enemy3.y) 
+                {
+                    if (player.x == enemy3.x + 50) 
+                    {
                         player.x += 100;
                     } else {
                         player.x -= 100;
@@ -267,7 +289,8 @@ public class Platformer extends JComponent implements KeyListener {
                         player.width == 25 && player.height == 25 && enemy3.y < player.y
                         && enemy3.y != - 100) {
                         lives -= 1;
-                        if (lives <= 0) {
+                        if (lives <= 0) 
+                        {
                             gameOver = true;
                         } else {
                             player.x = 100;
@@ -282,7 +305,8 @@ public class Platformer extends JComponent implements KeyListener {
                 }
                 
                 if (player.x >= powerup.x && player.x <= powerup.x + powerup.width && 
-                        player.y >= powerup.y && player.y <= powerup.y + powerup.height) {
+                        player.y >= powerup.y && player.y <= powerup.y + powerup.height) 
+                {
                     player.width += 25;
                     player.height += 25;
                     powerup.y = -50;
@@ -293,9 +317,11 @@ public class Platformer extends JComponent implements KeyListener {
             
             
             //if player dies
-            if (player.y > 600) {
+            if (player.y > 600) 
+            {
                 lives -= 1;
-                if (lives <= 0) {
+                if (lives <= 0) 
+                {
                     gameOver = true;
                 } else {
                     player.x = 100;
@@ -310,13 +336,15 @@ public class Platformer extends JComponent implements KeyListener {
 
                 inAir = true;
             }
-            if (player.y > 650) {
+            if (player.y > 650) 
+            {
                 inAir = true;
                 player.y = 650;
             }
 
             //do camera correction
-            if (player.x < WIDTH / 2) {
+            if (player.x < WIDTH / 2) 
+            {
                 //no camera correction
                 camx = 0;
             } else {
@@ -382,6 +410,8 @@ public class Platformer extends JComponent implements KeyListener {
             left = true;
         } else if (KeyCode == KeyEvent.VK_SPACE) {
             jump = true;
+        } else if (KeyCode == KeyEvent.VK_Z) {
+            powerDown = true;
         }
     }
 
@@ -394,6 +424,8 @@ public class Platformer extends JComponent implements KeyListener {
             left = false;
         } else if (KeyCode == KeyEvent.VK_SPACE) {
             jump = false;
+        } else if (KeyCode == KeyEvent.VK_Z) {
+            powerDown = false;
         }
     }
 
@@ -401,10 +433,12 @@ public class Platformer extends JComponent implements KeyListener {
         //make overlap rectangle
         Rectangle overlap = player.intersection(block);
         dy = 0;
-        if (player.y < block.y) {
+        if (player.y < block.y) 
+        {
             player.y -= overlap.height;
             inAir = false;
-        } else if (player.y + player.height > block.y + block.height) {
+        } else if (player.y + player.height > block.y + block.height) 
+        {
             player.y += overlap.height;
         }
         
@@ -416,11 +450,13 @@ public class Platformer extends JComponent implements KeyListener {
         Rectangle overlap = player.intersection(block);
 
         dy = 0;
-        if (player.y < block.y) {
+        if (player.y < block.y) 
+        {
             player.y += overlap.height;
             enemy.y = -100;
             inAir = false;
-        } else if (player.y + player.height > block.y + block.height) {
+        } else if (player.y + player.height > block.y + block.height) 
+        {
             player.y += overlap.height;
         }
     }
