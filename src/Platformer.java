@@ -74,7 +74,8 @@ public class Platformer extends JComponent implements KeyListener {
 
         g.setColor(playerColor);
         g.fillRect(player.x - camx, player.y, player.width, player.height);
-        if (level == 1) {
+        if (level == 1) 
+        {
             g.setColor(Color.BLACK);
             g.fillRect(block.x - camx, block.y, block.width, block.height);
             g.fillRect(block2.x - camx, block2.y, block2.width, block2.height);
@@ -92,7 +93,8 @@ public class Platformer extends JComponent implements KeyListener {
             g.fillRect(end.x - camx, end.y, end.width, end.height);
         }
         
-        if(level == 2) {
+        if(level == 2) 
+        {
             g.setColor(Color.black);
             g.fillRect(block.x - camx, block.y, block.width, block.height);
             g.fillRect(block2.x - camx, block2.y, block2.width, block2.height);
@@ -103,7 +105,8 @@ public class Platformer extends JComponent implements KeyListener {
         g.drawString("X " + lives, 50, 50);
         g.setColor(playerColor);
         g.fillRect(20, 35, 20, 20);
-        if (gameOver) {
+        if (gameOver) 
+        {
             g.setColor(Color.black);
             g.fillRect(0, 0, 900, 700);
             g.setColor(Color.white);
