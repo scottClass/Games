@@ -77,6 +77,7 @@ public class FlappyBird extends JComponent implements KeyListener {
         if (gameOver) {
             g.setColor(Color.DARK_GRAY);
             g.drawString("Game Over", 400, 300);
+            g.drawString("Press Jump to quit", 400, 350);
         }
         // GAME DRAWING ENDS HERE
     }
@@ -98,6 +99,11 @@ public class FlappyBird extends JComponent implements KeyListener {
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
+            if(gameOver) {
+                if(jump) {
+                    System.exit(0);
+                }
+            }
             if (!start) {
                 if (jump && !pressed) {
                     start = true;
