@@ -27,7 +27,7 @@ public class FlappyBird extends JComponent implements KeyListener {
     long desiredFPS = 60;
     long desiredTime = (1000) / desiredFPS;
     int dy = 0;
-    int gravity = 3/2;
+    int gravity = 3 / 2;
 
     //camera movement in x direction
     int camx = 0;
@@ -42,13 +42,14 @@ public class FlappyBird extends JComponent implements KeyListener {
     boolean gameOver = false;
     boolean start = false;
     boolean pressed = false;
-    
-    Rectangle player = new Rectangle(100, 150, 50, 50);
+
+    Rectangle player = new Rectangle(100, 300, 50, 50);
+
     Rectangle block = new Rectangle(1000, 500, 50, 200);
     Rectangle block2 = new Rectangle(1000, 0, 50, 200);
 
-    
     Rectangle ground = new Rectangle(0, 550, 1000000000, 50);
+
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
     // NOTE: This is already double buffered!(helps with framerate/speed)
@@ -67,7 +68,12 @@ public class FlappyBird extends JComponent implements KeyListener {
 
         g.setColor(Color.GREEN);
         g.fillRect(ground.x - camx, ground.y, ground.width, ground.height);
-        
+
+        if (!start) {
+            g.setColor(Color.DARK_GRAY);
+            g.drawString("Press space to start", 400, 300);
+        }
+
         if (gameOver) {
             g.setColor(Color.DARK_GRAY);
             g.drawString("Game Over", 400, 300);
@@ -92,45 +98,63 @@ public class FlappyBird extends JComponent implements KeyListener {
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
-            dy = dy + gravity;
-            
-            
-            if (!gameOver) {
-                player.x += 10;
+            if (!start) {
                 if (jump && !pressed) {
                     start = true;
                     pressed = true;
                     dy = - 20;
                 }
-                if(!jump) {
+                if (!jump) {
                     pressed = false;
                 }
             }
+            if (start) {
+                if (jump && !pressed) {
+                    start = true;
+                    pressed = true;
+                    dy = - 20;
+                }
+                if (!jump) {
+                    pressed = false;
+                }
+                dy = dy + gravity;
+
+                if (!gameOver) {
+                    player.x += 10;
+                    if (jump && !pressed) {
+                        start = true;
+                        pressed = true;
+                        dy = - 20;
+                    }
+                    if (!jump) {
+                        pressed = false;
+                    }
+                }
                 player.y += dy;
 
-            
-            if (player.intersects(block)) {
-                gameOver = true;
-                handleCollision(player, block);
-            } else if (player.intersects(block2)) {
-                gameOver = true;
-                handleCollision(player, block2);
-            }
-            
-            if(player.y < 0) {
-                player.y = 0;    
-            }
-            if (player.y > 500) {
-                player.y = 500;
-                gameOver = true;
-            }
+                if (player.intersects(block)) {
+                    gameOver = true;
+                    handleCollision(player, block);
+                } else if (player.intersects(block2)) {
+                    gameOver = true;
+                    handleCollision(player, block2);
+                }
 
-            //do camera correction
-            if (player.x < WIDTH / 2) {
-                //no camera correction
-                camx = 0;
-            } else {
-                camx = player.x - WIDTH / 2;
+                if (player.y < 0) {
+                    player.y = 0;
+                }
+                if (player.y > 500) {
+                    player.y = 500;
+                    gameOver = true;
+                }
+
+                //do camera correction
+                if (player.x < WIDTH / 2) {
+                    //no camera correction
+                    camx = 0;
+                } else {
+                    camx = player.x - WIDTH / 2 + 150;
+                }
             }
 
             // GAME LOGIC ENDS HERE 
