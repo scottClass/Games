@@ -47,6 +47,8 @@ public class FlappyBird extends JComponent implements KeyListener {
 
     Rectangle block = new Rectangle(1000, 500, 50, 200);
     Rectangle block2 = new Rectangle(1000, 0, 50, 200);
+    Rectangle block3 = new Rectangle(1500, 600, 50, 300);
+    Rectangle block4 = new Rectangle(1500, 100, 50, 300);
 
     Rectangle ground = new Rectangle(0, 550, 1000000000, 50);
 
@@ -65,6 +67,8 @@ public class FlappyBird extends JComponent implements KeyListener {
         g.setColor(Color.BLACK);
         g.fillRect(block.x - camx, block.y, block.width, block.height);
         g.fillRect(block2.x - camx, block2.y, block2.width, block2.height);
+        g.fillRect(block3.x - camx, block3.y, block3.width, block3.height);
+        g.fillRect(block4.x - camx, block4.y, block4.width, block4.height);
 
         g.setColor(Color.GREEN);
         g.fillRect(ground.x - camx, ground.y, ground.width, ground.height);
@@ -104,6 +108,7 @@ public class FlappyBird extends JComponent implements KeyListener {
                     System.exit(0);
                 }
             }
+            
             if (!start) {
                 if (jump && !pressed) {
                     start = true;
@@ -114,6 +119,7 @@ public class FlappyBird extends JComponent implements KeyListener {
                     pressed = false;
                 }
             }
+            
             if (start) {
                 if (jump && !pressed) {
                     start = true;
@@ -144,6 +150,12 @@ public class FlappyBird extends JComponent implements KeyListener {
                 } else if (player.intersects(block2)) {
                     gameOver = true;
                     handleCollision(player, block2);
+                } else if (player.intersects(block3)) {
+                    gameOver = true;
+                    handleCollision(player, block3);
+                } else if (player.intersects(block4)) {
+                    gameOver = true;
+                    handleCollision(player, block4);
                 }
 
                 if (player.y < 0) {
